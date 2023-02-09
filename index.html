@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <style>
+        span{
+            padding: 10px;
+        }
+    </style>
+</head>
+<body>
+    <center><h1>Expense Tracker</h1></center>
+    <label for="amount">Choose Expense Amount</label>
+    <input type="text" placeholder="Amount in INR" id="amount">
+    <label for="description">Choose description</label>
+    <input type="text" placeholder="description in words" id="description">
+    <label for="category">Choose category</label>
+    <select name="category" id="category">
+        <option value="food">Food</option>
+        <option value="grocery">Grocery</option>
+        <option value="rent">Rent</option>
+        <option value="loan">Loan</option>
+        <option value="travel">Travel</option>
+    </select>
+    <button onclick="addExpense()">Add Expense</button>
+    <div>
+        <ul id="expenselist">
+            
+        </ul>
+    </div>
+    
+</body>
+<script src="./index.js"></script>
+</html>
