@@ -1,10 +1,16 @@
 
 var expenselist = document.querySelector("#expenselist");
 var count=0;
+var selectedID;
 function addExpense(){
     var amount = document.querySelector("#amount").value;
     var descp = document.querySelector("#description").value;
     var category = document.querySelector("#category").value;
+    if(document.querySelector("#addExp").innerText === "Update"){
+        updateExpense(amount,descp,category)
+        return 
+    }
+    
     var liele = document.createElement("li");
     liele.id = count++;
     var amountspan = document.createElement("span");
@@ -20,6 +26,9 @@ function addExpense(){
     var deleteEl = document.createElement("button"); 
     deleteEl.innerText = "Delete";
     liele.appendChild(deleteEl);
+    var editEl = document.createElement("button");
+    editEl.innerText = "Edit";
+    liele.appendChild(editEl);
 
     //Axios Implementation
     const expensedata = {
@@ -34,11 +43,21 @@ function addExpense(){
 }
 document.addEventListener("click",function(event){
     var targetEl = event.target;
-    if(targetEl.parentElement && targetEl.parentElement.tagName == "LI"){
+    if(targetEl.parentElement && targetEl.parentElement.tagName == "LI" && targetEl.innerText == "Delete"){
         expenselist.removeChild(targetEl.parentElement);
         axios.delete(`https://crudcrud.com/api/73f9f8ad60964e40a0df2edaefc13b49/expenseData/${targetEl.parentElement.id}`)
         .then( (res) => console.log(res))
         .catch((err) => console.log(err))
+    }
+    else if(targetEl.parentElement && targetEl.parentElement.tagName == "LI" && targetEl.innerText == "Edit"){
+        
+       
+      
+        document.querySelector("#amount").value = targetEl.parentElement.children[0].innerHTML;
+        document.querySelector("#description").value = targetEl.parentElement.children[1].innerHTML;
+        document.querySelector("#category").value = targetEl.parentElement.children[2].innerHTML;
+        document.querySelector("#addExp").innerText = "Update";
+        selectedID = targetEl.parentElement.id;
     }
 
 })
@@ -71,5 +90,19 @@ function loadExpenseData(data){
     var deleteEl = document.createElement("button"); 
     deleteEl.innerText = "Delete";
     liele.appendChild(deleteEl);
+    var editEl = document.createElement("button");
+    editEl.innerText = "Edit";
+    liele.appendChild(editEl);
 }
+}
+
+function updateExpense(amount,descp,category){
+    const expdata = {
+        amount,
+        descp,
+        category
+    }
+    axios.put(`https://crudcrud.com/api/73f9f8ad60964e40a0df2edaefc13b49/expenseData/${selectedID}`,expdata)
+    .then( (res) => console.log(res))
+    .catch( (err) => console.log(err))
 }
