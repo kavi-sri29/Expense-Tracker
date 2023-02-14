@@ -36,7 +36,11 @@ document.addEventListener("click",function(event){
     var targetEl = event.target;
     if(targetEl.parentElement && targetEl.parentElement.tagName == "LI"){
         expenselist.removeChild(targetEl.parentElement);
+        axios.delete(`https://crudcrud.com/api/73f9f8ad60964e40a0df2edaefc13b49/expenseData/${targetEl.parentElement.id}`)
+        .then( (res) => console.log(res))
+        .catch((err) => console.log(err))
     }
+
 })
 
 document.addEventListener("DOMContentLoaded",() => {
@@ -53,7 +57,7 @@ function loadExpenseData(data){
         var category = data[i].category;
     
     var liele = document.createElement("li");
-    liele.id = count++;
+    liele.id = data[i]._id;
     var amountspan = document.createElement("span");
     var desspan = document.createElement("span");
     var categoryspan = document.createElement("span");
