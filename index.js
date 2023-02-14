@@ -21,6 +21,15 @@ function addExpense(){
     deleteEl.innerText = "Delete";
     liele.appendChild(deleteEl);
 
+    //Axios Implementation
+    const expensedata = {
+        amount,
+        descp,
+        category
+    }
+    axios.post('https://crudcrud.com/api/73f9f8ad60964e40a0df2edaefc13b49/expenseData',expensedata)
+    .then( (res) => console.log(res))
+    .catch( (err) => console.log(err))
 }
 document.addEventListener("click",function(event){
     var targetEl = event.target;
